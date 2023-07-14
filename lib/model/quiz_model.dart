@@ -3,6 +3,7 @@ import 'package:flutter_interview_questions/model/difficulty.dart';
 import 'package:flutter_interview_questions/model/language_item.dart';
 import 'package:flutter_interview_questions/model/quiz_item.dart';
 
+import 'question.dart';
 import 'question_bank.dart';
 
 export '../components/provider.dart';
@@ -50,16 +51,20 @@ class QuizModel extends ChangeNotifier {
     required Set<LanguageItem> selectedTags,
     required Set<Difficulty> selectedDifficulty,
   }) {
-    var resultTemp = allQuestions.values.expand((e) => e);
-    if (selectedDifficulty.length != Difficulty.values.length) {
-      resultTemp = resultTemp.where((e) => selectedDifficulty
-          .any((element) => (element.index + 1) == e.difficulty));
-    }
+    List<Question> resultTemp = [];
     if (selectedTags.length != allQuestions.length) {
-      resultTemp = resultTemp
-          .where((e) => selectedTags.intersection(e.tags.toSet()).isNotEmpty);
+      selectedTags.forEach((element) {
+        resultTemp.addAll(allQuestions[element] ?? []);
+      });
+    } else {
+      resultTemp = allQuestions.values.expand((e) => e).toList();
     }
-
+    if (selectedDifficulty.length != Difficulty.values.length) {
+      resultTemp = resultTemp
+          .where((e) => selectedDifficulty
+              .any((element) => (element.index + 1) == e.difficulty))
+          .toList();
+    }
     quizItems = resultTemp.take(count).map<QuizItem>(QuizItem.new).toList();
   }
 
