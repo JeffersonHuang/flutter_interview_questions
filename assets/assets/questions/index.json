@@ -1,0 +1,20 @@
+[
+  {
+    "lang": "English",
+    "locale": "en-en",
+    "folder": "en",
+    "files": [
+      "mock.json",
+      "wsbt_1.json"
+    ]
+  },
+  {
+    "lang": "中文",
+    "locale": "zh-cn",
+    "folder": "zh",
+    "files": [
+      "mock.json",
+      "zh_zz.json"
+    ]
+  }
+]
